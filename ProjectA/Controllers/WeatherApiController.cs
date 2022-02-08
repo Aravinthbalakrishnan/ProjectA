@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using ProjectA.Models;
 using RestSharp;
 
 
@@ -20,7 +22,7 @@ namespace ProjectA.Controllers
         // GET api/<WeatherApiController>/5
         [HttpGet]
         [Route("/GetWeather")]
-        public string GetWeather()
+        public Wind GetWeather()
         {
 
             var client = new RestClient("http://api.openweathermap.org/data/2.5/weather?lat=9.9312&lon=76.2673&appid=5c846ccb12d264eb0d469cd27ebf6ce9");
@@ -29,8 +31,14 @@ namespace ProjectA.Controllers
             IRestResponse response = client.Execute(request);
             //Console.WriteLine(response.Content);
 
+            var wheather= JsonConvert.DeserializeObject<Wheather>(response.Content);
+
+
+
+
+
             //response.Content.
-            return (response.Content);
+            return wheather.wind;
         }
 
         // POST api/<WeatherApiController>
